@@ -1414,7 +1414,7 @@ console.log('arr', arr4)
 // Функция принимает 2 массива и возвращает новый массив,в котором собраны общие элементы (то есть элементы,
 // которые встречаются и в первом и во втором массивах) без повторений.
 let arr02 = [5, 1, 6, 3, 2]
-function getNewUniqueArray(arr1: any, arr2: any) {
+function getNewUniqueArray(arr1: any[], arr2: any[]) {
   let arr = [] as any[]
   arr1.forEach(el => {
     if (!arr.includes(el) && arr2.includes(el)) {
@@ -1427,7 +1427,7 @@ console.log(getNewUniqueArray(arr4, arr02))
 
 //Функция принимает 2 массива и возвращает новый массив, в котором собраны все элементы из первого массива, 
 // которых нет во втором массиве
-function newMassive(arr1: any, arr2: any) {
+function newMassive(arr1: any[], arr2: any[]) {
   let unique = arr1.filter((item) => arr2.indexOf(item) == -1)
   return unique
 }
@@ -1739,7 +1739,7 @@ class MyClass {
 
 //4 Написать функцию, которая считает сумму цифр числа
 
-function sumNumber(s: number) {
+function sumNumber(s: number):number {
   let ss = s.toString()
   if (ss.length == 1) {
     return s
@@ -2039,7 +2039,7 @@ class HtmlElement {
     this.elements.unshift(element)
   }
 
-  getHtml() {
+  getHtml():string {
     if (this.single) {
       return `<${this.tag} ${this.attrs.join(' ')} value="${this.text}" >`
     } else {
@@ -2350,7 +2350,7 @@ feed.print()
 
 //Планирование: setTimeout и setInterval
 
-function showNotification({ top = 0, right = 0, className, html }) {
+function showNotification({ top = 0, right = 0, className = '', html = '' }) {
 
   let notification = document.createElement('div');
   notification.className = "notification";
@@ -2628,7 +2628,7 @@ function textConclusion(template: any, ...strings: string[]) {
     template = template.replace('%' + (index + 1), item))
   return template
 }
-console.log(textConclusion('Today is %1 %2.%3.%4', 'Monday', 7, 8, 2020))
+console.log(textConclusion('Today is %1 %2.%3.%4', 'Monday', '7', '8', '2020'))
 
 //Генерация пользовательских событий 
 
@@ -2807,7 +2807,7 @@ function testLoaded() {
     img.src = sources[i];
     widthSum += img.width;
   }
-  alert(widthSum);
+  console.log(widthSum);
 }
 
 // должно выводиться 300
@@ -2992,7 +2992,7 @@ class Figure {
 try {
 
   console.log('Начало блока try');  // (1) <--
-  lalala; // ошибка, переменная не определена!
+  // lalala; ошибка, переменная не определена!
   console.log('Конец блока try (никогда не выполнится)');  // (2)
 
 } catch (err:any) {
@@ -3001,9 +3001,9 @@ try {
 
 }
 
-Конструкция try..catch позволяет обрабатывать ошибки во время исполнения кода. Она позволяет запустить код и перехватить ошибки, которые могут в нём возникнуть.
+// Конструкция try..catch позволяет обрабатывать ошибки во время исполнения кода. Она позволяет запустить код и перехватить ошибки, которые могут в нём возникнуть.
 
-Синтаксис:
+// Синтаксис:
 
 try {
   // исполняем код
@@ -3028,3 +3028,16 @@ try {
 // Проброс исключения – это очень важный приём обработки ошибок: блок catch обычно ожидает и знает, как обработать определённый тип ошибок, поэтому он должен пробрасывать дальше ошибки, о которых он не знает.
 
 // Даже если у нас нет try..catch, большинство сред позволяют настроить «глобальный» обработчик ошибок, чтобы ловить ошибки, которые «выпадают наружу». В браузере это window.onerror.
+
+// ТЕМА: ОБРАБОТКА СОБЫТИЙ.
+// DOCUMENT OBJECT MODEL
+// Задание 1
+// Создать html-страницу со списком ссылок. Ссылки на внешние источники (которые начинаются с http://)
+// необходимо подчеркнуть пунктиром.Искать такие ссылки в списке и устанавливать им дополнительные стили необходимо с помощью JS.
+
+const links = document.querySelectorAll('.links a') as NodeListOf<HTMLAnchorElement>
+links.forEach(el=>{
+  if (el.getAttribute('href')?.includes('http')) {
+    el.classList.add('extsource')
+  }
+})
