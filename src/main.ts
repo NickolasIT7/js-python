@@ -1739,7 +1739,7 @@ class MyClass {
 
 //4 Написать функцию, которая считает сумму цифр числа
 
-function sumNumber(s: number):number {
+function sumNumber(s: number): number {
   let ss = s.toString()
   if (ss.length == 1) {
     return s
@@ -2039,7 +2039,7 @@ class HtmlElement {
     this.elements.unshift(element)
   }
 
-  getHtml():string {
+  getHtml(): string {
     if (this.single) {
       return `<${this.tag} ${this.attrs.join(' ')} value="${this.text}" >`
     } else {
@@ -2995,9 +2995,9 @@ try {
   // lalala; ошибка, переменная не определена!
   console.log('Конец блока try (никогда не выполнится)');  // (2)
 
-} catch (err:any) {
+} catch (err: any) {
 
-  console.log(`Возникла ошибка!`,err, err.name, err.message, err.stack); // (3) <--
+  console.log(`Возникла ошибка!`, err, err.name, err.message, err.stack); // (3) <--
 
 }
 
@@ -3007,7 +3007,7 @@ try {
 
 try {
   // исполняем код
-} catch(err) {
+} catch (err) {
   // если случилась ошибка, прыгаем сюда
   // err - это объект ошибки
 } finally {
@@ -3037,7 +3037,7 @@ try {
 // необходимо подчеркнуть пунктиром.Искать такие ссылки в списке и устанавливать им дополнительные стили необходимо с помощью JS.
 
 const links = document.querySelectorAll('.links a') as NodeListOf<HTMLAnchorElement>
-links.forEach(el=>{
+links.forEach(el => {
   if (el.getAttribute('href')?.includes('http')) {
     el.classList.add('extsource')
   }
@@ -3047,9 +3047,23 @@ links.forEach(el=>{
 // Создать html-страницу с деревом вложенных директорий. При клике на элемент списка, 
 // он должен сворачиваться или разворачиваться. При наведении на элемент, шрифт должен становится жирным (с помощью CSS).
 
-let menu = document.getElementById('PC');
-    let titleElem =menuElem.querySelector('.title');
+let menu = document.querySelector('.menu') as HTMLDivElement
+let lists = menu.querySelectorAll('li') 
 
-    titleElem.onclick = function() {
-      menuElem.classList.toggle('open');
+lists.forEach(el=>{
+  el.addEventListener('click', (e:MouseEvent)=>{
+    const target = e.target as HTMLElement
+    const li = target.closest('li') as HTMLElement
+    if (li == e.currentTarget) {
+      const ul = li.querySelector('ul')
+      if (ul) ul.classList.toggle('hide')
     }
+  })
+})
+
+//3
+// Создать html-страницу со списком книг. При щелчке на элемент, цвет текста должен меняться на оранжевый. 
+// При повторном щелчке на другую книгу, предыдущей необходимо возвращать прежний цвет.
+// Если при клике мышкой была зажата клавиша Ctrl, то элементдобавляется/удаляется из выделенных.
+// Если при клике мышкой была зажата клавиша Shift, то к выделению добавляются все
+// элементы в промежутке от предыдущего кликнутого до текущего.
