@@ -3048,10 +3048,10 @@ links.forEach(el => {
 // он должен сворачиваться или разворачиваться. При наведении на элемент, шрифт должен становится жирным (с помощью CSS).
 
 let menu = document.querySelector('.menu') as HTMLDivElement
-let lists = menu.querySelectorAll('li') 
+let lists = menu.querySelectorAll('li')
 
-lists.forEach(el=>{
-  el.addEventListener('click', (e:MouseEvent)=>{
+lists.forEach(el => {
+  el.addEventListener('click', (e: MouseEvent) => {
     const target = e.target as HTMLElement
     const li = target.closest('li') as HTMLElement
     if (li == e.currentTarget) {
@@ -3067,3 +3067,61 @@ lists.forEach(el=>{
 // Если при клике мышкой была зажата клавиша Ctrl, то элементдобавляется/удаляется из выделенных.
 // Если при клике мышкой была зажата клавиша Shift, то к выделению добавляются все
 // элементы в промежутке от предыдущего кликнутого до текущего.
+
+let list = document.querySelector('.booklist ol') as HTMLOListElement
+ 
+
+function setSelected(books:any)  {
+  if(books.target.tagName == 'OL'){
+      let selected = document.querySelector('.bookList.selected')
+      if(selected) selected.classList.remove('selected')
+      books.target.classList.add('selected')
+  }
+}
+
+let lastActive: any
+list.addEventListener('click', event => {
+  const target = event.target as HTMLElement
+  if(target.tagName == 'LI') {
+    if (event.ctrlKey) {
+      target.classList.toggle('selected')
+    } 
+    if (!event.ctrlKey && !event.shiftKey) {
+      for (let el of list.querySelectorAll('li')) {
+        if (el != target) {
+          el.classList.remove('selected')
+        }
+      }
+      target.classList.add('selected')
+    }
+    if (event.shiftKey) {
+      if (!lastActive) {
+        for (let el of list.querySelectorAll('li')) {
+          if (el != target) {
+            el.classList.add('selected')
+          } else {
+            break
+          }
+        }
+      } else {
+        let targetIndex = 0
+        let lastActiveIndex = 0
+        const lis = list.querySelectorAll('li')
+        lis.forEach((el, i)=>{
+          if (el==target) targetIndex = i
+          if (el==lastActive) lastActiveIndex = i
+        })
+        for (let i=Math.min(targetIndex, lastActiveIndex); i<=Math.max(targetIndex, lastActiveIndex); i++) {
+          lis[i].classList.add('selected')
+        }
+      }
+      target.classList.add('selected')
+    }
+    lastActive = target
+  }
+})
+
+
+
+
+

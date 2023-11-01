@@ -31,3 +31,12 @@ html {
   .hide {
     display: none;
   }
+
+  .booklist ol {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .selected {
+    color:orangered
+  }
